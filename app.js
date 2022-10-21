@@ -269,6 +269,12 @@ function searchByTraits(people) {
         }
     } else {trait += "\nNo matches found in the system"}
     let something = prompt(`${trait}\nEnter a name to see more details, type 'restart' to search by new criteria, or type 'cancel' to end search.`)
+    for (let i = 0; i < foundPeople.length; i++){
+        let fullName = foundPeople[i].firstName + foundPeople[i].lastName
+        if (something == fullName){
+            something = foundPeople[i]
+        }
+    }
     switch (something){
         case "cancel":
             break;
@@ -276,7 +282,7 @@ function searchByTraits(people) {
             searchByTraits(people);
             break;
         case something:
-            return [something];
+            return something;
         default:
             return app(people);
     }
