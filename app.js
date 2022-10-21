@@ -193,7 +193,7 @@ function chars(input) {
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
 function findPersonFamily(result, people) {
-    let personFamily = [`${result.firstName} ${result.lastName} Family:\n\n`,]
+    let personFamily = [`${result.firstName} ${result.lastName} Family:\n`,]
     let personSpouse;
     personSpouse = people.filter(function(person){
         if(person.id == result.currentSpouse){
@@ -201,9 +201,10 @@ function findPersonFamily(result, people) {
         }
     })
     if(personSpouse.length == 1){
-        personFamily += `Spouse: ${personSpouse[0].firstName} ${personSpouse[0].lastName}\n`
+        personFamily += '\nSpouse:\n'
+        personFamily += `${personSpouse[0].firstName} ${personSpouse[0].lastName}\n`
     } else {
-        personFamily += "No spouse in the system\n"
+        personFamily += "\nNo spouse in the system\n"
     }
     let personParents;
     personParents = people.filter(function(person){
@@ -212,11 +213,12 @@ function findPersonFamily(result, people) {
         }
     })
     if(personParents.length > 0){
+        personFamily += '\nParents:\n'
         for(let i = 0; i < personParents.length; i++){
-            personFamily += `Parent ${i + 1}: ${personParents[i].firstName} ${personParents[i].lastName}\n`;
+            personFamily += `${personParents[i].firstName} ${personParents[i].lastName}\n`;
         }
     } else {
-        personFamily += "No parents in the system\n"
+        personFamily += "\nNo parents in the system\n"
     }
 
     let personSiblings;
@@ -226,11 +228,12 @@ function findPersonFamily(result, people) {
         }
     })
     if(personSiblings.length > 0 ) {
+        personFamily += "\nSiblings:\n"
         for(let i = 0; i < personSiblings.length; i++){
-            personFamily += `Sibling ${i + 1}: ${personSiblings[i].firstName} ${personSiblings[i].lastName}\n`;
+            personFamily += `${personSiblings[i].firstName} ${personSiblings[i].lastName}\n`;
         }
     } else {
-        personFamily += "No siblings in the system\n"
+        personFamily += "\nNo siblings in the system\n"
     }    
 
     
