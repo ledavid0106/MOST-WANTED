@@ -193,7 +193,7 @@ function chars(input) {
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
 function findPersonFamily(desired, people) {
-    let personFamily = [`${desired.firstName} ${desired.lastName} Family:\n`,]
+    let personFamily = [`${desired.firstName} ${desired.lastName}'s Family:\n`,]
     let personSpouse;
     personSpouse = people.filter(function(person){
         if(person.id == desired.currentSpouse){
@@ -213,18 +213,18 @@ function findPersonFamily(desired, people) {
         for(let i = 0; i < personParents.length; i++){
             personFamily += `${personParents[i].firstName} ${personParents[i].lastName}\n`;
         }
-    } else {personFamily += "\nNo parents in the system\n"}
-    let personSiblings;
-    personSiblings = people.filter(function(person){
-        if((person.id != desired.id) && (person.parents.includes(personParents[0].id || personParents[1]))) {
-            return true;
-    }})
-    if(personSiblings.length > 0 ) {
-        personFamily += "\nSiblings:\n"
-        for(let i = 0; i < personSiblings.length; i++){
-            personFamily += `${personSiblings[i].firstName} ${personSiblings[i].lastName}\n`;
-        }
-    } else { personFamily += "\nNo siblings in the system\n"}    
+        let personSiblings;
+        personSiblings = people.filter(function(person){
+            if((person.id != desired.id) && (person.parents.includes(personParents[0].id || personParents[1]))) {
+                return true;
+        }})
+        if(personSiblings.length > 0 ) {
+            personFamily += "\nSiblings:\n"
+            for(let i = 0; i < personSiblings.length; i++){
+                personFamily += `${personSiblings[i].firstName} ${personSiblings[i].lastName}\n`;
+            }
+        } else { personFamily += "\nNo siblings in the system\n"}    
+    } else {personFamily += "\nNo parents or siblings in the system\n"}
     alert(personFamily);
 }
 
@@ -244,9 +244,9 @@ function findPersonDescendants(desired, people){
 }
 
 function searchByTraits(people) {
-    let traits = promptFor("Please type in search criteria without spaces then value. \nSeparate multiple criteria by a semicolon (no spaces around semicolon). \nCan also select 'restart' or 'quit'\n(example for one criteria - eyeColor brown)\n(example for multiple criteria - eyeColor brown;gender female)", chars);
+    let traits = promptFor("Search database by the following criteria:\nid, firstName, lastName, gender, dob, height, weight, eyeColor, occupation, parent id, or spouse id\n\nTo search using multiple criteria (up to 5), please enter in the following format: eyeColor brown gender female occupation doctor", chars);
     traits = traits.split(" ")
-    let trait = ["We've searched by your criteria\n"]
+    let trait = ["We've searched by your criteria...\n"]
     let foundPeople;
     foundPeople = people.filter(function (person) {
             if (person[traits[0]] == traits[1]) {
