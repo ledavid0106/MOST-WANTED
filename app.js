@@ -201,7 +201,7 @@ function findPersonFamily(result, people) {
         }
     })
     if(personSpouse.length == 1){
-        personFamily += `Spouse: ${personSpouse[0].firstName} ${personSpouse[0].lastName}`
+        personFamily += `Spouse: ${personSpouse[0].firstName} ${personSpouse[0].lastName}\n`
     }
     let personParents;
     personParents = people.filter(function(person){
@@ -210,16 +210,9 @@ function findPersonFamily(result, people) {
         }
     })
     if(personParents.length > 0){
-        for(i = 0; i < personParents.length; i++)
-        personFamily += `Parent ${i + 1}: ${personParents[i].firstName} ${personParents[i].lastName}`
+        for(let i = 0; i < personParents.length; i++){
+            personFamily += `Parent ${i + 1}: ${personParents[i].firstName} ${personParents[i].lastName}\n`;
+        }
     }
-    // personFamily += `Last Name: ${person.lastName}\n`;
-    // personFamily += `Gender: ${person.gender}\n`;
-    // personFamily += `DOB: ${person.dob}\n`;
-    // personFamily += `Height: ${person.height}\n`;
-    // personFamily += `Weight: ${person.weight}\n`;
-    // personFamily += `Eye Color: ${person.eyeColor}\n`;
-    // personFamily += `Occupation: ${person.occupation}\n`;
-
     alert(personFamily);
 }
