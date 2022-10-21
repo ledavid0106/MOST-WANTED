@@ -198,46 +198,33 @@ function findPersonFamily(desired, people) {
     personSpouse = people.filter(function(person){
         if(person.id == desired.currentSpouse){
             return true;
-        }
-    })
+    }})
     if(personSpouse.length == 1){
         personFamily += '\nSpouse:\n'
         personFamily += `${personSpouse[0].firstName} ${personSpouse[0].lastName}\n`
-    } else {
-        personFamily += "\nNo spouse in the system\n"
-    }
+    } else {personFamily += "\nNo spouse in the system\n"}
     let personParents;
     personParents = people.filter(function(person){
         if(desired.parents.includes(person.id)){
             return true;
-        }
-    })
+    }})
     if(personParents.length > 0){
         personFamily += '\nParents:\n'
         for(let i = 0; i < personParents.length; i++){
             personFamily += `${personParents[i].firstName} ${personParents[i].lastName}\n`;
         }
-    } else {
-        personFamily += "\nNo parents in the system\n"
-    }
-
+    } else {personFamily += "\nNo parents in the system\n"}
     let personSiblings;
     personSiblings = people.filter(function(person){
         if((person.id != desired.id) && (person.parents.includes(personParents[0].id || personParents[1]))) {
             return true;
-        }
-    })
+    }})
     if(personSiblings.length > 0 ) {
         personFamily += "\nSiblings:\n"
         for(let i = 0; i < personSiblings.length; i++){
             personFamily += `${personSiblings[i].firstName} ${personSiblings[i].lastName}\n`;
         }
-    } else {
-        personFamily += "\nNo siblings in the system\n"
-    }    
-
-    
-
+    } else { personFamily += "\nNo siblings in the system\n"}    
     alert(personFamily);
 }
 
