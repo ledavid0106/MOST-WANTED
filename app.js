@@ -268,5 +268,16 @@ function searchByTraits(people) {
             trait += `${foundPeople[i].firstName} ${foundPeople[i].lastName}\n`
         }
     } else {trait += "\nNo matches found in the system"}
-    alert(trait)
+    let something = prompt(`${trait}\nEnter a name to see more details, type 'restart' to search by new criteria, or type 'cancel' to end search.`)
+    switch (something){
+        case "cancel":
+            break;
+        case "restart":
+            searchByTraits(people);
+            break;
+        case something:
+            return [something];
+        default:
+            return app(people);
+    }
 } 
