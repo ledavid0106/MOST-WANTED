@@ -192,11 +192,11 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
-function findPersonFamily(result, people) {
-    let personFamily = [`${result.firstName} ${result.lastName} Family:\n`,]
+function findPersonFamily(desired, people) {
+    let personFamily = [`${desired.firstName} ${desired.lastName} Family:\n`,]
     let personSpouse;
     personSpouse = people.filter(function(person){
-        if(person.id == result.currentSpouse){
+        if(person.id == desired.currentSpouse){
             return true;
         }
     })
@@ -208,7 +208,7 @@ function findPersonFamily(result, people) {
     }
     let personParents;
     personParents = people.filter(function(person){
-        if(result.parents.includes(person.id)){
+        if(desired.parents.includes(person.id)){
             return true;
         }
     })
@@ -223,7 +223,7 @@ function findPersonFamily(result, people) {
 
     let personSiblings;
     personSiblings = people.filter(function(person){
-        if((person.id != result.id) && (person.parents.includes(personParents[0].id || personParents[1]))) {
+        if((person.id != desired.id) && (person.parents.includes(personParents[0].id || personParents[1]))) {
             return true;
         }
     })
@@ -239,4 +239,22 @@ function findPersonFamily(result, people) {
     
 
     alert(personFamily);
+}
+
+function findPersonDescendants(desired, people){
+    let personDescendants;
+    let personChildren = [`${desired.firstName} ${desired.lastName} Children:\n`,]
+    personDescendants = people.filter(function(person){
+        if(person.parents.includes(desired.id)){
+            return true;
+        }
+    })
+    if(personDescendants.length > 0){
+        for(let i = 0; i < personDescendants.length; i++){
+            personChildren += `${personDescendants[i].firstName} ${personDescendants[i].lastName}\n`;
+        }
+    } else {
+        personChildren += "\nNo descendants in the system\n"
+    }
+    alert(personChildren);
 }
