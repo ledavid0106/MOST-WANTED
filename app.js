@@ -249,8 +249,9 @@ function searchByTraits(people) {
     let trait = [`Here are the potential matches with the following traits: ${traits[0]}: ${traits[1]}\n`]
     alert(traits)
 
-    let foundPeople = people.filter(function (person) {
-        if (person.eyeColor==traits[1]) {
+    let foundPeople;
+    foundPeople = people.filter(function (person) {
+        if (person.string(traits[0]) == traits[1]) {
             return true;
         }
     });
