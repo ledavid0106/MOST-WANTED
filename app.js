@@ -234,14 +234,31 @@ function findPersonDescendants(desired, people){
     personDescendants = people.filter(function(person){
         if(person.parents.includes(desired.id)){
             return true;
-        }
-    })
+    }})
     if(personDescendants.length > 0){
         for(let i = 0; i < personDescendants.length; i++){
             personChildren += `${personDescendants[i].firstName} ${personDescendants[i].lastName}\n`;
         }
-    } else {
-        personChildren += "\nNo descendants in the system\n"
-    }
+    } else {personChildren += "\nNo descendants in the system\n"}
     alert(personChildren);
 }
+
+function searchByTraits(people) {
+    let traits = promptFor("Please type in search criteria without spaces then value. \nSeparate multiple criteria by a semicolon (no spaces around semicolon). \nCan also select 'restart' or 'quit'\n(example for one criteria - eyeColor brown)\n(example for multiple criteria - eyeColor brown;gender female)", chars);
+    traits = traits.split(" ")
+    let trait = [`Here are the potential matches with the following traits: ${traits[0]}: ${traits[1]}\n`]
+    alert(traits)
+
+    let foundPeople = people.filter(function (person) {
+        if (person.eyeColor==traits[1]) {
+            return true;
+        }
+    });
+    if (foundPeople.length > 0) {
+        for(let i = 0; i < foundPeople.length; i++) {
+            trait += `${foundPeople[i].firstName} ${foundPeople[i].lastName}\n`
+        }
+    } else {trait += "\nNo matches found in the system"}
+    alert(trait)
+    // return `${foundtrait.firstName} ${foundtrait.lastName}`
+} 
