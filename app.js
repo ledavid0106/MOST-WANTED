@@ -247,11 +247,11 @@ function searchByTraits(people) {
     let traits = promptFor("Please type in search criteria without spaces then value. \nSeparate multiple criteria by a semicolon (no spaces around semicolon). \nCan also select 'restart' or 'quit'\n(example for one criteria - eyeColor brown)\n(example for multiple criteria - eyeColor brown;gender female)", chars);
     traits = traits.split(" ")
     let trait = [`Here are the potential matches with the following traits: ${traits[0]}: ${traits[1]}\n`]
-    alert(traits)
-
+    // alert(traits)
+    alert(`${traits[0]}, ${traits[1]}, ${traits}` )
     let foundPeople;
     foundPeople = people.filter(function (person) {
-        if (person.string(traits[0]) == traits[1]) {
+        if (person[traits[0]] == traits[1]) {
             return true;
         }
     });
