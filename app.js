@@ -246,20 +246,27 @@ function findPersonDescendants(desired, people){
 function searchByTraits(people) {
     let traits = promptFor("Please type in search criteria without spaces then value. \nSeparate multiple criteria by a semicolon (no spaces around semicolon). \nCan also select 'restart' or 'quit'\n(example for one criteria - eyeColor brown)\n(example for multiple criteria - eyeColor brown;gender female)", chars);
     traits = traits.split(" ")
-    let trait = [`Here are the potential matches with the following traits: ${traits[0]}: ${traits[1]}\n`]
-    // alert(traits)
-    alert(`${traits[0]}, ${traits[1]}, ${traits}` )
+    let trait = ["We've searched by your criteria\n"]
     let foundPeople;
     foundPeople = people.filter(function (person) {
-        if (person[traits[0]] == traits[1]) {
-            return true;
-        }
-    });
+            if (person[traits[0]] == traits[1]) {
+                return true;}});
+    foundPeople = foundPeople.filter(function (person) {
+        if (person[traits[2]] == traits[3]) {
+            return true;}});
+    foundPeople = foundPeople.filter(function (person) {
+        if (person[traits[4]] == traits[5]) {
+            return true;}});
+    foundPeople = foundPeople.filter(function (person) {
+        if (person[traits[6]] == traits[7]) {
+            return true;}});
+    foundPeople = foundPeople.filter(function (person) {
+        if (person[traits[8]] == traits[9]) {
+            return true;}});
     if (foundPeople.length > 0) {
         for(let i = 0; i < foundPeople.length; i++) {
             trait += `${foundPeople[i].firstName} ${foundPeople[i].lastName}\n`
         }
     } else {trait += "\nNo matches found in the system"}
     alert(trait)
-    // return `${foundtrait.firstName} ${foundtrait.lastName}`
 } 
