@@ -64,6 +64,7 @@ function mainMenu(person, people) {
     // Routes our application based on the user's input
     switch (displayOption) {
         case "info":
+
             //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
             let personInfo = displayPerson(person[0]);
@@ -191,3 +192,34 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
+function findPersonFamily(result, people) {
+    let personFamily = []
+    let personSpouse;
+    personSpouse = people.filter(function(person){
+        if(person.id == result.currentSpouse){
+            return true;
+        }
+    })
+    if(personSpouse.length == 1){
+        personFamily += `Spouse: ${personSpouse[0].firstName} ${personSpouse[0].lastName}`
+    }
+    let personParents;
+    personParents = people.filter(function(person){
+        if(result.parents.includes(person.id)){
+            return true;
+        }
+    })
+    if(personParents.length > 0){
+        for(i = 0; i < personParents.length; i++)
+        personFamily += `Parent ${i + 1}: ${personParents[i].firstName} ${personParents[i].lastName}`
+    }
+    // personFamily += `Last Name: ${person.lastName}\n`;
+    // personFamily += `Gender: ${person.gender}\n`;
+    // personFamily += `DOB: ${person.dob}\n`;
+    // personFamily += `Height: ${person.height}\n`;
+    // personFamily += `Weight: ${person.weight}\n`;
+    // personFamily += `Eye Color: ${person.eyeColor}\n`;
+    // personFamily += `Occupation: ${person.occupation}\n`;
+
+    alert(personFamily);
+}
