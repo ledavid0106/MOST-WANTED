@@ -193,7 +193,7 @@ function chars(input) {
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
 function findPersonFamily(result, people) {
-    let personFamily = []
+    let personFamily = [`${result.firstName} ${result.lastName} Family:\n\n`,]
     let personSpouse;
     personSpouse = people.filter(function(person){
         if(person.id == result.currentSpouse){
@@ -202,6 +202,8 @@ function findPersonFamily(result, people) {
     })
     if(personSpouse.length == 1){
         personFamily += `Spouse: ${personSpouse[0].firstName} ${personSpouse[0].lastName}\n`
+    } else {
+        personFamily += "No spouse in the system\n"
     }
     let personParents;
     personParents = people.filter(function(person){
@@ -213,6 +215,25 @@ function findPersonFamily(result, people) {
         for(let i = 0; i < personParents.length; i++){
             personFamily += `Parent ${i + 1}: ${personParents[i].firstName} ${personParents[i].lastName}\n`;
         }
+    } else {
+        personFamily += "No parents in the system\n"
     }
+
+    let personSiblings;
+    personSiblings = people.filter(function(person){
+        if((person.id != result.id) && (person.parents.includes(personParents[0].id || personParents[1]))) {
+            return true;
+        }
+    })
+    if(personSiblings.length > 0 ) {
+        for(let i = 0; i < personSiblings.length; i++){
+            personFamily += `Sibling ${i + 1}: ${personSiblings[i].firstName} ${personSiblings[i].lastName}\n`;
+        }
+    } else {
+        personFamily += "No siblings in the system\n"
+    }    
+
+    
+
     alert(personFamily);
 }
