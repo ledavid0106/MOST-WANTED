@@ -268,21 +268,26 @@ function searchByTraits(people) {
             trait += `${[i]}) ${foundPeople[i].firstName} ${foundPeople[i].lastName}\n`
         }
     } else {trait += "\nNo matches found in the system"}
-    let poi = prompt(`${trait}\nPlease select a number to see more details of that person, type 'restart' to search by new criteria, or type 'cancel' to end search.`)
-    poi = foundPeople[parseInt(poi)];
-    let poi2 = foundPeople.filter(function(person){
-        if(person.firstName.includes(poi.firstName)){
-            return true;
-    }})
-    switch (poi2){
-        case "cancel":
-            break;
-        case "restart":
-            searchByTraits(people);
-            break;
-        case poi2:
-            return poi2;
-        default:
-            return app(people);
-    }
+    let poi;
+    if(foundPeople.length > 0) {
+        poi = prompt(`${trait}\nPlease select a number to see more details of that person, type 'restart' to search by new criteria, or type 'cancel' to end search.`)
+        let poi3 = [];
+        if(parseInt(poi)<foundPeople.length){
+            poi = foundPeople[parseInt(poi)];
+            poi3.push(poi)
+        }
+        switch (poi){
+            case "cancel":
+                break;
+            case "restart":
+                app(people);
+                break;
+            case poi3[0]:
+                return poi3;
+            default:
+                return app(people);
+        }
+    } else {
+        alert(trait)
+        return app(people)}    
 } 
