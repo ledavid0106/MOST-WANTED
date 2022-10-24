@@ -269,20 +269,23 @@ function findPersonSiblings(desired,people, personParents){
     return personFamily;
 }
 
-function findPersonDescendants(desired, people){
+function findPersonDescendants(desired, people, levelsOfDescendants = 0){
+    let indentation = ' '.repeat(7*levelsOfDescendants)
+    let PersonDescendantsDisplayed = ''
+    PersonDescendantsDisplayed += [`${desired.firstName} ${desired.lastName}:\n`]
+    levelsOfDescendants += 1;
     let personDescendants;
-    let PersonDescendantsDisplayed = [`${desired.firstName} ${desired.lastName} Children:\n`,]
     personDescendants = people.filter(function(person){
         if(person.parents.includes(desired.id)){
             return true;
-    }})
+}})
     if(personDescendants.length > 0){
         for(let i = 0; i < personDescendants.length; i++){
-            PersonDescendantsDisplayed += `${personDescendants[i].firstName} ${personDescendants[i].lastName}\n`;
-            PersonDescendantsDisplayed += `     ${findPersonDescendants(personDescendants[i], people)}\n`
-        }
+            
+            PersonDescendantsDisplayed += `${indentation}-->${findPersonDescendants(personDescendants[i], people, levelsOfDescendants)}\n`
+        }}
 
-    } else {PersonDescendantsDisplayed += "\nNo descendants in the system\n"}
+    else {PersonDescendantsDisplayed += `${indentation}-->No children in the system`}
     return PersonDescendantsDisplayed;
 }
 
