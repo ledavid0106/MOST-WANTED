@@ -68,24 +68,39 @@ function mainMenu(person, people) {
             //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
             let personInfo = displayPerson(person[0]);
-            break;
+            switch(personInfo){
+                case true:
+                    mainMenu(person, people)
+                case false:
+                    app(people);
+            }
         case "family":
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
             let personFamily = findPersonFamily(person[0], people);
-            break;
+            switch (personFamily){
+                case true:
+                    mainMenu(person, people)
+                case false:
+                    app(people);
+            }
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
-            break;
+            switch (personDescendants){
+                case true:
+                    mainMenu(person, people)
+                case false:
+                    app(people);
+            }
         case "restart":
             // Restart app() from the very beginning
             app(people);
             break;
         case "quit":
             // Stop application execution
-            return;
+            break;
         default:
             // Prompt user again. Another instance of recursion
             return mainMenu(person, people);
@@ -145,7 +160,8 @@ function displayPerson(person) {
     personInfo += `Eye Color: ${person.eyeColor}\n`;
     personInfo += `Occupation: ${person.occupation}\n`;
     //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
-    alert(personInfo);
+    return confirm(`${personInfo}\nSelect 'Ok' to go back to person or 'Cancel' to start a new search`);
+
 }
 // End of displayPerson()
 
@@ -222,7 +238,7 @@ function findPersonFamily(desired, people) {
             }
         } else { personFamily += "\nNo siblings in the system\n"}    
     } else {personFamily += "\nNo parents or siblings in the system\n"}
-    alert(personFamily);
+    return confirm(`${personFamily}\nSelect 'Ok' to go back to person or 'Cancel' to start a new search`);;
 }
 
 function findPersonDescendants(desired, people){
@@ -237,7 +253,7 @@ function findPersonDescendants(desired, people){
             personChildren += `${personDescendants[i].firstName} ${personDescendants[i].lastName}\n`;
         }
     } else {personChildren += "\nNo descendants in the system\n"}
-    alert(personChildren);
+    return confirm(`${personChildren}\nSelect 'Ok' to go back to person or 'Cancel' to start a new search`);;
 }
 
 function searchByTraits(people) {
@@ -287,5 +303,4 @@ function filterFurther(foundPeople, trait, people){
             return poi3;
         default:
             return filterFurther(foundPeople, trait);
-    } 
-} 
+    }}
