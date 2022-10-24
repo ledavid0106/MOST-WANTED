@@ -88,7 +88,8 @@ function mainMenu(person, people) {
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
             let personDescendants = findPersonDescendants(person[0], people);
-            switch (personDescendants){
+            let nextStep = confirm(`${personDescendants}\nSelect 'Ok' to go back to person or 'Cancel' to start a new search`)
+            switch (nextStep){
                 case true:
                     mainMenu(person, people)
                 case false:
@@ -270,17 +271,19 @@ function findPersonSiblings(desired,people, personParents){
 
 function findPersonDescendants(desired, people){
     let personDescendants;
-    let personChildren = [`${desired.firstName} ${desired.lastName} Children:\n`,]
+    let PersonDescendantsDisplayed = [`${desired.firstName} ${desired.lastName} Children:\n`,]
     personDescendants = people.filter(function(person){
         if(person.parents.includes(desired.id)){
             return true;
     }})
     if(personDescendants.length > 0){
         for(let i = 0; i < personDescendants.length; i++){
-            personChildren += `${personDescendants[i].firstName} ${personDescendants[i].lastName}\n`;
+            PersonDescendantsDisplayed += `${personDescendants[i].firstName} ${personDescendants[i].lastName}\n`;
+            PersonDescendantsDisplayed += `     ${findPersonDescendants(personDescendants[i], people)}\n`
         }
-    } else {personChildren += "\nNo descendants in the system\n"}
-    return confirm(`${personChildren}\nSelect 'Ok' to go back to person or 'Cancel' to start a new search`);;
+
+    } else {PersonDescendantsDisplayed += "\nNo descendants in the system\n"}
+    return PersonDescendantsDisplayed;
 }
 
 function searchByTraits(people) {
