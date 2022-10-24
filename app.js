@@ -265,7 +265,7 @@ function searchByTraits(people) {
         for(let i = 0; i < foundPeople.length; i++) {
             trait += `${[i+1]}) ${foundPeople[i].firstName} ${foundPeople[i].lastName}\n`
         }
-        return filterFurther(foundPeople, trait);
+        return filterFurther(foundPeople, trait, people);
     } else {
         trait += "\nNo matches found in the system"
         alert(trait)
@@ -273,7 +273,7 @@ function searchByTraits(people) {
     }
 }
 
-function filterFurther(foundPeople, trait){
+function filterFurther(foundPeople, trait, people){
     let poi;
     poi = prompt(`${trait}\nPlease select a number to see more details of that person, type 'restart' to search by new criteria, or type 'cancel' to end search.`)
     let poi3 = [];
@@ -285,8 +285,7 @@ function filterFurther(foundPeople, trait){
         case "cancel":
             break;
         case "restart":
-            app(people);
-            break;
+            return app(people);
         case poi3[0]:
             return poi3;
         default:
