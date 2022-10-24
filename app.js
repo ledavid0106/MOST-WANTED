@@ -265,29 +265,33 @@ function searchByTraits(people) {
             return true;}});
     if (foundPeople.length > 0) {
         for(let i = 0; i < foundPeople.length; i++) {
-            trait += `${[i]}) ${foundPeople[i].firstName} ${foundPeople[i].lastName}\n`
+            trait += `${[i+1]}) ${foundPeople[i].firstName} ${foundPeople[i].lastName}\n`
         }
-    } else {trait += "\nNo matches found in the system"}
-    let poi;
-    if(foundPeople.length > 0) {
-        poi = prompt(`${trait}\nPlease select a number to see more details of that person, type 'restart' to search by new criteria, or type 'cancel' to end search.`)
-        let poi3 = [];
-        if(parseInt(poi)<foundPeople.length){
-            poi = foundPeople[parseInt(poi)];
-            poi3.push(poi)
-        }
-        switch (poi){
-            case "cancel":
-                break;
-            case "restart":
-                app(people);
-                break;
-            case poi3[0]:
-                return poi3;
-            default:
-                return app(people);
-        }
+        return filterFurther(foundPeople, trait);
     } else {
+        trait += "\nNo matches found in the system"
         alert(trait)
-        return app(people)}    
+        return app(people)
+    }
+}
+
+function filterFurther(foundPeople, trait){
+    let poi;
+    poi = prompt(`${trait}\nPlease select a number to see more details of that person, type 'restart' to search by new criteria, or type 'cancel' to end search.`)
+    let poi3 = [];
+    if(parseInt(poi) > 0 && parseInt(poi) <=foundPeople.length){
+        poi = foundPeople[parseInt(poi)-1];
+        poi3.push(poi)
+    }
+    switch (poi){
+        case "cancel":
+            break;
+        case "restart":
+            app(people);
+            break;
+        case poi3[0]:
+            return poi3;
+        default:
+            return filterFurther(foundPeople, trait);
+    } 
 } 
