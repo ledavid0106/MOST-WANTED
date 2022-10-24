@@ -114,10 +114,19 @@ function mainMenu(person, people) {
  * @param {Array} people        A collection of person objects.
  * @returns {Array}             An array containing the person-object (or empty array if no match)
  */
+ function capitalizeFirstLetter(str) {
+
+    // converting first letter to uppercase
+    const capitalized = str.charAt(0).toUpperCase() + str.slice(1);
+
+    return capitalized;
+}
 function searchByName(people) {
     let firstName = promptFor("What is the person's first name?", chars);
+    firstName = capitalizeFirstLetter(firstName)
     let lastName = promptFor("What is the person's last name?", chars);
-
+    lastName = capitalizeFirstLetter(lastName)
+    
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
         if (person.firstName === firstName && person.lastName === lastName) {
@@ -205,40 +214,58 @@ function chars(input) {
 //////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 
-function findPersonFamily(desired, people) {
-    let personFamily = [`${desired.firstName} ${desired.lastName}'s Family:\n`,]
+function findPersonFamily(desired,people){
+    let personFamily = [`${desired.firstName} ${desired.lastName}'s Family:\n`]
+    personFamily += findPersonSpouse(desired,people);
+    personFamily += findPersonParentsAndSiblings(desired,people);
+    return confirm(`${personFamily}\nSelect 'Ok' to go back to person or 'Cancel' to start a new search`)
+}
+
+function findPersonSpouse(desired,people){
     let personSpouse;
+    let personFamily="";
     personSpouse = people.filter(function(person){
         if(person.id == desired.currentSpouse){
             return true;
     }})
     if(personSpouse.length == 1){
-        personFamily += '\nSpouse:\n'
-        personFamily += `${personSpouse[0].firstName} ${personSpouse[0].lastName}\n`
-    } else {personFamily += "\nNo spouse in the system\n"}
+        personFamily += `\nSpouse:\n${personSpouse[0].firstName} ${personSpouse[0].lastName}\n`
+    } else {
+        personFamily += "\nNo spouse in the system\n"}
+    return personFamily
+}
+
+function findPersonParentsAndSiblings(desired,people){
+    let personFamily="";
     let personParents;
     personParents = people.filter(function(person){
         if(desired.parents.includes(person.id)){
             return true;
     }})
     if(personParents.length > 0){
-        personFamily += '\nParents:\n'
+        personFamily += '\nParents:\n';
         for(let i = 0; i < personParents.length; i++){
-            personFamily += `${personParents[i].firstName} ${personParents[i].lastName}\n`;
+            personFamily += `${personParents[i].firstName} ${personParents[i].lastName}\n`
         }
-        let personSiblings;
-        personSiblings = people.filter(function(person){
-            if((person.id != desired.id) && (person.parents.includes(personParents[0].id || personParents[1]))) {
-                return true;
-        }})
-        if(personSiblings.length > 0 ) {
-            personFamily += "\nSiblings:\n"
-            for(let i = 0; i < personSiblings.length; i++){
-                personFamily += `${personSiblings[i].firstName} ${personSiblings[i].lastName}\n`;
-            }
-        } else { personFamily += "\nNo siblings in the system\n"}    
+        personFamily += findPersonSiblings(desired,people, personParents)
     } else {personFamily += "\nNo parents or siblings in the system\n"}
-    return confirm(`${personFamily}\nSelect 'Ok' to go back to person or 'Cancel' to start a new search`);;
+    return personFamily
+}
+
+function findPersonSiblings(desired,people, personParents){
+    let personFamily="";
+    let personSiblings;
+    personSiblings = people.filter(function(person){
+        if((person.id != desired.id) && (person.parents.includes(personParents[0].id || personParents[1]))) {
+            return true;
+    }})
+    if(personSiblings.length > 0 ) {
+        personFamily += "\nSiblings:\n"
+        for(let i = 0; i < personSiblings.length; i++){
+            personFamily += `${personSiblings[i].firstName} ${personSiblings[i].lastName}\n`;
+        }
+    } else { personFamily += "\nNo siblings in the system\n"}
+    return personFamily;
 }
 
 function findPersonDescendants(desired, people){
@@ -262,8 +289,6 @@ function searchByTraits(people) {
     let trait = ["We've searched by your criteria...\n"]
     let foundPeople;
 
-    
-    
     foundPeople = people.filter(function (person) {
         if (person[traits[0]] == traits[1]) {
             return true;}});
